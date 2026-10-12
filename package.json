@@ -1,0 +1,61 @@
+{
+  "name": "elibrary-parent",
+  "productName": "E-Library Parent",
+  "version": "1.0.0",
+  "description": "Parent app for the Child-Safe E-Library: manage content, laptops, time limits and requests.",
+  "author": {
+    "name": "Child-Safe E-Library",
+    "email": "admin@localhost"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k -n vite,electron \"vite\" \"wait-on tcp:5174 && cross-env ELIB_DEV_SERVER=http://localhost:5174 electron .\"",
+    "build": "vite build",
+    "start": "vite build && electron .",
+    "dist:win": "vite build && electron-builder --win nsis",
+    "dist:mac": "vite build && electron-builder --mac dmg",
+    "dist:linux": "vite build && electron-builder --linux AppImage deb"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^5.4.11",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "org.childsafe.elibrary.parent",
+    "productName": "E-Library Parent",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*",
+      "dist/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.education"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "category": "Education",
+      "executableName": "elibrary-parent",
+      "maintainer": "Child-Safe E-Library <admin@localhost>"
+    }
+  }
+}

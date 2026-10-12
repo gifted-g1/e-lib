@@ -1,0 +1,15 @@
+# systemd *user* unit. Enabled for the kiosk user by `elibrary-setup-kiosk --mode systemd`.
+[Unit]
+Description=Child-Safe E-Library (kiosk)
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/child-safe-elibrary
+# Exit code 0 means a parent chose "Exit app"; anything else (crash, kill) restarts it.
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

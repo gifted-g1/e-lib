@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Child-Safe E-Library
+Comment=Start the E-Library when this user logs in
+Exec=/usr/bin/child-safe-elibrary
+Terminal=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=2
+X-GNOME-AutoRestart=true
+X-KDE-autostart-after=panel

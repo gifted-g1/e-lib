@@ -1,0 +1,124 @@
+/* Parent-app additions on top of the shared library styles. */
+body {
+  user-select: auto;
+}
+.admin-main {
+  padding: 28px 40px;
+}
+.form-actions.spread {
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-link {
+  border: none;
+  background: none;
+  color: var(--primary);
+  padding: 6px 0;
+}
+.btn-link:hover:not(:disabled) {
+  background: none;
+  text-decoration: underline;
+}
+.grid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.device-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.device-card h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #c9c2d6;
+  display: inline-block;
+}
+.dot-online {
+  background: var(--ok);
+}
+.child-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.92em;
+}
+.stat-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.stat {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 22px;
+  min-width: 180px;
+}
+.stat-value {
+  font-size: 2em;
+  font-weight: 900;
+}
+.stat-label {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.9em;
+}
+.token-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: var(--surface-2);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.token-box code {
+  flex: 1;
+  font-size: 1.05em;
+  background: none;
+  word-break: break-all;
+}
+.steps {
+  margin: 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.progress {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.progress > div {
+  height: 100%;
+  background: var(--primary);
+  transition: width 0.2s ease;
+}
+.section {
+  margin-bottom: 28px;
+}
+.limits-form {
+  display: flex;
+  gap: 14px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+.limits-form label {
+  flex: 0 0 auto;
+}
