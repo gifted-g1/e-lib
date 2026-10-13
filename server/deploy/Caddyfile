@@ -1,0 +1,6 @@
+library.example.org {
+	request_body {
+		max_size 2100MB
+	}
+	reverse_proxy elibrary:8080
+}

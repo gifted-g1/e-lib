@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+// Thin access point for the preload bridge (window.elib).
+export const api = window.elib;
+
+export const TYPE_META = {
+  video: { icon: '🎬', label: 'Video', className: 'type-video' },
+  pdf: { icon: '📚', label: 'Book', className: 'type-pdf' },
+  site: { icon: '🌍', label: 'Website', className: 'type-site' },
+=======
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const bridge = window.parentBridge;
@@ -14,12 +23,28 @@ export const TYPE_META = {
   video: { icon: '🎬', label: 'Video' },
   pdf: { icon: '📚', label: 'Book (PDF)' },
   site: { icon: '🌍', label: 'Website' },
+>>>>>>> 9cdb3b1a4e77639efe6a102895d504764a0cff37
 };
 
 export function errorMessage(err) {
   return (err && err.message) || String(err);
 }
 
+<<<<<<< HEAD
+// SQLite CURRENT_TIMESTAMP is UTC "YYYY-MM-DD HH:MM:SS".
+export function parseDbTime(ts) {
+  if (!ts) return null;
+  return new Date(ts.includes('T') ? ts : `${ts.replace(' ', 'T')}Z`);
+}
+
+export function formatDateTime(ts) {
+  const d = parseDbTime(ts);
+  return d ? d.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : '';
+}
+
+export function formatMinutes(seconds) {
+  const m = Math.round(seconds / 60);
+=======
 // Server times are ISO ("2026-10-12T10:00:00Z"); laptop times are UTC "2026-10-12 10:00:00".
 export function parseTime(ts) {
   if (!ts) return null;
@@ -51,6 +76,7 @@ export function isOnline(device) {
 
 export function formatMinutes(seconds) {
   const m = Math.round((seconds || 0) / 60);
+>>>>>>> 9cdb3b1a4e77639efe6a102895d504764a0cff37
   if (m < 60) return `${m} min`;
   return `${Math.floor(m / 60)} h ${m % 60} min`;
 }
@@ -66,6 +92,8 @@ export function formatBytes(bytes) {
   }
   return `${n.toFixed(i ? 1 : 0)} ${units[i]}`;
 }
+<<<<<<< HEAD
+=======
 
 // Load data from the server; `reload` re-fetches. Optional polling interval in ms.
 export function useServerData(path, { poll = 0 } = {}) {
@@ -95,3 +123,4 @@ export function useServerData(path, { poll = 0 } = {}) {
   }, [reload, poll]);
   return { data, error, reload, setError };
 }
+>>>>>>> 9cdb3b1a4e77639efe6a102895d504764a0cff37

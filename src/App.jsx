@@ -1,4 +1,108 @@
 import { useCallback, useEffect, useState } from 'react';
+<<<<<<< HEAD
+import { api } from './api';
+import { useElibEvent, useIdleCursor } from './hooks';
+import AdminLogin from './components/AdminLogin';
+import Home from './pages/Home';
+import VideoPlayer from './pages/VideoPlayer';
+import PdfViewer from './pages/PdfViewer';
+import SiteViewer from './pages/SiteViewer';
+import Admin from './pages/Admin';
+import Setup from './pages/Setup';
+import ProfilePicker from './pages/ProfilePicker';
+import LockScreen from './pages/LockScreen';
+
+const VIEWERS = { video: VideoPlayer, pdf: PdfViewer, site: SiteViewer };
+
+export default function App() {
+  const [session, setSession] = useState(null);
+  const [online, setOnline] = useState(navigator.onLine);
+  const [openItem, setOpenItem] = useState(null);
+  const [adminMode, setAdminMode] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+
+  useIdleCursor(3000);
+
+  const refresh = useCallback(async () => {
+    const s = await api.session.getState();
+    setSession(s);
+    setOnline(s.online);
+  }, []);
+
+  useEffect(() => {
+    refresh();
+    // No drag-and-drop navigation or browser context menus anywhere.
+    const stop = (e) => e.preventDefault();
+    window.addEventListener('contextmenu', stop);
+    window.addEventListener('dragover', stop);
+    window.addEventListener('drop', stop);
+    return () => {
+      window.removeEventListener('contextmenu', stop);
+      window.removeEventListener('dragover', stop);
+      window.removeEventListener('drop', stop);
+    };
+  }, [refresh]);
+
+  useElibEvent('session:state', (s) => {
+    setSession(s);
+    setOnline(s.online);
+  });
+  useElibEvent('net:status', ({ online: o }) => setOnline(o));
+
+  // A time lock always closes whatever is open.
+  useEffect(() => {
+    if (session?.locked) setOpenItem(null);
+  }, [session?.locked]);
+
+  const openAdmin = useCallback(() => setShowLogin(true), []);
+  const exitAdmin = useCallback(async () => {
+    await api.admin.logout().catch(() => {});
+    setAdminMode(false);
+    setOpenItem(null);
+    refresh();
+  }, [refresh]);
+
+  if (!session) return <div className="splash">📖</div>;
+  if (!session.hasAdmin) return <Setup onDone={refresh} />;
+
+  let page;
+  if (adminMode) {
+    page = <Admin onExit={exitAdmin} />;
+  } else if (session.locked) {
+    page = <LockScreen session={session} onAdmin={openAdmin} />;
+  } else if (!session.childId) {
+    page = <ProfilePicker onPicked={refresh} onAdmin={openAdmin} />;
+  } else if (openItem) {
+    const Viewer = VIEWERS[openItem.type];
+    page = (
+      <Viewer
+        item={openItem}
+        session={session}
+        online={online}
+        overlayOpen={showLogin}
+        onBack={() => setOpenItem(null)}
+        onAdmin={openAdmin}
+      />
+    );
+  } else {
+    page = <Home session={session} online={online} onOpen={setOpenItem} onAdmin={openAdmin} />;
+  }
+
+  return (
+    <>
+      {page}
+      {showLogin && (
+        <AdminLogin
+          onClose={() => setShowLogin(false)}
+          onSuccess={() => {
+            setShowLogin(false);
+            setOpenItem(null);
+            setAdminMode(true);
+          }}
+        />
+      )}
+    </>
+=======
 import { api, bridge } from './api';
 import Login from './pages/Login';
 import Overview from './pages/Overview';
@@ -76,5 +180,6 @@ export default function App() {
         />
       </main>
     </div>
+>>>>>>> 9cdb3b1a4e77639efe6a102895d504764a0cff37
   );
 }
